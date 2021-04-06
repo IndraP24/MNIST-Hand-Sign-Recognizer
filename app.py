@@ -1,0 +1,41 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout, BatchNormalization
+from keras.preprocessing.image import ImageDataGenerator
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelBinarizer
+from sklearn.metrics import classification_report,confusion_matrix
+from keras.callbacks import ReduceLROnPlateau
+
+
+st.markdown("<h1 style='text-align: center;'>Hand Sign Recognition</h1>", unsafe_allow_html=True)
+
+st.markdown("<h3 style='text-align: center;'>Built with Tensorflow2 & Keras</h3>", unsafe_allow_html=True)
+
+st.text("2. Results of your selection:")
+
+gesture = pd.read_csv('Data/sign_mnist_test.csv')
+
+st.sidebar.title("1. Choose a gesture: ")
+a = st.sidebar.number_input(label = 'Enter a value upto 255: ', min_value=0, value=0, step=1)
+
+
+# Take the label
+label = gesture['label'][a]
+
+# Take the pixels
+pixels = gesture.iloc[a, 1:]
+
+# The pixel intensity values are integers from 0 to 255
+pixels = np.array(pixels, dtype='uint8')
+
+# Reshape the array into 28x28 array
+pixels = pixels.reshape((28, 28))
+
+
+# Plot
+
