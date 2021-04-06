@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import tensorflow as tf
 import keras
 from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout, BatchNormalization
@@ -39,3 +40,34 @@ pixels = pixels.reshape((28, 28))
 
 # Plot
 
+st.sidebar.text(f"Label is {label}")
+
+st.sidebar.image(pixels, cmap='grey')
+
+
+# Extract labels
+
+y_test = gesture['label']
+
+# Label Binarizer
+lb = LabelBinarizer()
+
+y_test = lb.fit_transform(y_test)
+
+x_test = gesture.values
+
+# normalization
+x_test = x_test/255
+
+
+# reshape
+x_test = x_test.reshape(-1, 28, 28, 1)
+
+st.cache(allow_output_mutation=True)
+model = tf.keras.models.load_model('hand_gesture.h5')
+predictions = model.predict_classes(x_test)
+
+
+st.success("Done!")
+
+st.text("The alphabet is {}".format(chr(ord('`')+label)))
