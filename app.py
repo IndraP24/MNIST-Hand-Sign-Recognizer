@@ -19,7 +19,7 @@ st.markdown("<h3 style='text-align: center;'>Built with Tensorflow2 & Keras</h3>
 
 st.text("2. Results of your selection:")
 
-gesture = pd.read_csv('Data/sign_mnist_test.csv')
+gesture = pd.read_csv('https://raw.githubusercontent.com/VinitaSilaparasetty/hand-gesture-recognition/main/sign_mnist_test.csv')
 
 st.sidebar.title("1. Choose a gesture: ")
 a = st.sidebar.number_input(label = 'Enter a value upto 255: ', min_value=0, value=0, step=1)
@@ -54,7 +54,7 @@ lb = LabelBinarizer()
 
 y_test = lb.fit_transform(y_test)
 
-x_test = gesture.values
+x_test = gesture.drop('label', axis=1).values
 
 # normalization
 x_test = x_test/255
@@ -64,8 +64,8 @@ x_test = x_test/255
 x_test = x_test.reshape(-1, 28, 28, 1)
 
 st.cache(allow_output_mutation=True)
-model = tf.keras.models.load_model('hand_gesture.h5')
-predictions = model.predict_classes(x_test)
+model = tf.keras.models.load_model('hand_gesture1.h5')
+predictions = np.argmax(model.predict(x_test), axis=-1)
 
 
 st.success("Done!")
