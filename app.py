@@ -42,7 +42,7 @@ pixels = pixels.reshape((28, 28))
 
 st.sidebar.text(f"Label is {label}")
 
-st.sidebar.image(pixels, cmap='grey')
+st.sidebar.image(pixels, width=100)
 
 
 # Extract labels
