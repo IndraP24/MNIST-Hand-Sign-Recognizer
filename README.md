@@ -1,1 +1,1 @@
-<h1 style="align: center;"> MNIST Hand Sign Recognizer</h1>
+<h1 align=center> MNIST Hand Sign Recognizer</h1>
